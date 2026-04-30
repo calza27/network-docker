@@ -12,5 +12,15 @@ Apps will live in the following structure on the server, with this repo being re
         ├── app1/
         │   └── docker-compose.yml
         └── app2/
-           └── docker-compose.yml
+            └── docker-compose.yml
 ```
+
+
+## docker-up.sh
+
+A simple script that loops through each directory containing a `docker-compose.yml` file and performs `docker compose up -d`
+
+
+## docker-down.sh
+
+A simple script that loops through each directory containing a `docker-compose.yml` file and performs `docker compose down`
