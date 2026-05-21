@@ -18,9 +18,9 @@ Apps will live in the following structure on the server, with this repo being re
 
 ## docker-up.sh
 
-A simple script that loops through each directory containing a `docker-compose.yml` file and performs `docker compose up -d`
+A simple script that loops through each directory containing a `docker-compose.yml` file and performs `docker compose up -d`.
 
 
 ## docker-down.sh
 
-A simple script that loops through each directory containing a `docker-compose.yml` file and performs `docker compose down`
+A simple script that loops through each directory containing a `docker-compose.yml` file and performs `docker compose down`.
