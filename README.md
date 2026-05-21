@@ -24,5 +24,3 @@ A simple script that loops through each directory containing a `docker-compose.y
 ## docker-down.sh
 
 A simple script that loops through each directory containing a `docker-compose.yml` file and performs `docker compose down`
-
-A simple change to check access
