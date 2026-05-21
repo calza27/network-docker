@@ -1,0 +1,21 @@
+# More info at https://github.com/pi-hole/docker-pi-hole/ and https://docs.pi-hole.net/
+services:
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "30053:80/tcp"
+      - "30453:443/tcp"
+    environment:
+      TZ: 'Australia/Melbourne'
+      FTLCONF_webserver_api_password: ''
+      FTLCONF_dns_listeningMode: 'ALL'
+      FTLCONF_misc_etc_dnsmasq_d: 'true'
+    volumes:
+      - '/data/docker/mounts/pihole/config:/etc/pihole'
+      - '/data/docker/mounts/pihole/dnsmasq:/etc/dnsmasq.d'
+    cap_add:
+      - SYS_NICE
+    restart: unless-stopped
