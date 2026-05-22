@@ -1,0 +1,95 @@
+secrets:
+  bazarr_key:
+    file: /data/docker/secrets/homepage/bazarr.key
+  bookshelf_key:
+    file: /data/docker/secrets/homepage/bookshelf.key
+  cleanuparr_key:
+    file: /data/docker/secrets/homepage/cleanuparr.key
+  jellyfin_key:
+    file: /data/docker/secrets/homepage/jellyfin.key
+  nginx_key:
+    file: /data/docker/secrets/homepage/nginx.key
+  prowlarr_key:
+    file: /data/docker/secrets/homepage/prowlarr.key
+  qbit_key:
+    file: /data/docker/secrets/homepage/qbittorrent.key
+  radarr_key:
+    file: /data/docker/secrets/homepage/radarr.key
+  seer_key:
+    file: /data/docker/secrets/homepage/seer.key
+  sonarr_key:
+    file: /data/docker/secrets/homepage/sonarr.key
+  truenas_key:
+    file: /data/docker/secrets/homepage/truenas.key
+  unifi_key:
+    file: /data/docker/secrets/homepage/unifi.key
+services:
+  homepage:
+    image: ghcr.io/gethomepage/homepage:v1.13.0
+    # platform: linux/amd64
+    cap_drop:
+      - ALL
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 1024M
+    environment:
+      HOMEPAGE_ALLOWED_HOSTS: '*'
+      HOMEPAGE_FILE_BAZARR_KEY: /run/secrets/bazarr_key
+      HOMEPAGE_FILE_BOOKSHELF_KEY: /run/secrets/bookshelf_key
+      HOMEPAGE_FILE_CLEANUPARR_KEY: /run/secrets/cleanuparr_key
+      HOMEPAGE_FILE_JELLYFIN_KEY: /run/secrets/jellyfin_key
+      HOMEPAGE_FILE_NGINX_KEY: /run/secrets/nginx_key
+      HOMEPAGE_FILE_PROWLARR_KEY: /run/secrets/prowlarr_key
+      HOMEPAGE_FILE_QBIT_KEY: /run/secrets/qbit_key
+      HOMEPAGE_FILE_RADARR_KEY: /run/secrets/radarr_key
+      HOMEPAGE_FILE_SEER_KEY: /run/secrets/seer_key
+      HOMEPAGE_FILE_SONARR_KEY: /run/secrets/sonarr_key
+      HOMEPAGE_FILE_TRUENAS_KEY: /run/secrets/truenas_key
+      HOMEPAGE_FILE_UNIFI_KEY: /run/secrets/unifi_key
+      NVIDIA_VISIBLE_DEVICES: void
+      PORT: '30054'
+      TZ: Australia/Melbourne
+      # UMASK: '002'
+      # UMASK_SET: '002'
+    # group_add:
+    #   - 568
+    #   - 999
+    healthcheck:
+      interval: 30s
+      retries: 5
+      start_interval: 2s
+      start_period: 15s
+      test:
+        - CMD
+        - wget
+        - '--quiet'
+        - '--spider'
+        - http://127.0.0.1:30054/api/healthcheck
+      timeout: 5s
+    ports:
+      - ':30054:30054' # Web UI
+    # privileged: False
+    secrets:
+      - sonarr_key
+      - truenas_key
+      - radarr_key
+      - bookshelf_key
+      - bazarr_key
+      - jellyfin_key
+      - nginx_key
+      - prowlarr_key
+      - qbit_key
+      - seer_key
+      - unifi_key
+      - cleanuparr_key
+    # security_opt:
+    #   - no-new-privileges=true
+    # stdin_open: False
+    # tty: False
+    user: '1337:1337'
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /data/docker/mounts/homepage:/app/config
+    restart: unless-stopped
