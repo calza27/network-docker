@@ -2,6 +2,11 @@ services:
   uptime-kuma:
     image: louislam/uptime-kuma:2
     container_name: uptime-kuma
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 512M
     ports:
       - "31050:3001"
     volumes:
