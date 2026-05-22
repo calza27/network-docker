@@ -36,8 +36,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '2'
-          memory: 1024M
+          cpus: '1'
+          memory: 256M
     environment:
       HOMEPAGE_ALLOWED_HOSTS: '*'
       HOMEPAGE_FILE_BAZARR_KEY: /run/secrets/bazarr_key

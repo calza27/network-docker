@@ -2,6 +2,11 @@ services:
   apprise:
     image: caronc/apprise:latest
     container_name: apprise
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 128M
     ports:
       - "30075:8000"
     environment:

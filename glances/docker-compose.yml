@@ -2,6 +2,11 @@ services:
   glances:
     image: nicolargo/glances:latest-full
     container_name: glances
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 256M
     ports:
       - '61208:61208' # Web UI
     environment:

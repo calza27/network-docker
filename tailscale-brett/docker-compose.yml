@@ -6,6 +6,11 @@ services:
     image: tailscale/tailscale:latest
     container_name: tailscale-brett
     hostname: tailscale-brett-exit-node
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 512M
     environment:
       - TS_AUTHKEY_FILE=/run/secrets/auth_key
       - TS_STATE_DIR=/var/lib/tailscale

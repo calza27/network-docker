@@ -2,6 +2,11 @@ services:
   app:
     image: 'jc21/nginx-proxy-manager:latest'
     container_name: nginx-proxy-manager
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 256M
     ports:
       - '80:80'
       - '443:443'

@@ -2,6 +2,11 @@ services:
   speedtest-tracker:
     image: lscr.io/linuxserver/speedtest-tracker:latest
     container_name: speedtest-tracker
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 256M
     ports:
       - 30220:80
     environment:
