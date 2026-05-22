@@ -28,6 +28,7 @@ secrets:
 services:
   homepage:
     image: ghcr.io/gethomepage/homepage:latest
+    container_name: homepage
     cap_drop:
       - ALL
     deploy:
