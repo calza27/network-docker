@@ -3,7 +3,7 @@ services:
     image: nicolargo/glances:latest-full
     container_name: glances
     ports:
-      - '61208:61208' # Web UI
+      - '30015:61208' # Web UI
     environment:
       - "GLANCES_OPT=-w"
     volumes:
