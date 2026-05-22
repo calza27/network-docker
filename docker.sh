@@ -31,6 +31,7 @@ case "$action" in
             else
                 echo "Directory for container '$container' not found, skipping."
             fi
+            echo ""
         done
         ;;
     down)
@@ -40,6 +41,7 @@ case "$action" in
             else
                 echo "Directory for container '$container' not found, skipping."
             fi
+            echo ""
         done
         ;;
     *)
