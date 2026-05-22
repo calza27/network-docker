@@ -1,0 +1,15 @@
+services:
+  app:
+    image: 'jc21/nginx-proxy-manager:latest'
+    container_name: nginx-proxy-manager
+    ports:
+      - '80:80'
+      - '443:443'
+      - '81:81'
+    environment:
+      TZ: "Australia/Melbourne"
+      DISABLE_IPV6: 'true'
+    volumes:
+      - /data/docker/mounts/nginx/data:/data
+      - /data/docker/mounts/nginx/certs:/etc/letsencrypt
+    restart: unless-stopped
