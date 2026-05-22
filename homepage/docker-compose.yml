@@ -26,7 +26,6 @@ secrets:
 services:
   homepage:
     image: ghcr.io/gethomepage/homepage:latest
-    # platform: linux/amd64
     cap_drop:
       - ALL
     deploy:
@@ -51,11 +50,6 @@ services:
       NVIDIA_VISIBLE_DEVICES: void
       PORT: '30054'
       TZ: Australia/Melbourne
-      # UMASK: '002'
-      # UMASK_SET: '002'
-    # group_add:
-    #   - 568
-    #   - 999
     healthcheck:
       interval: 30s
       retries: 5
@@ -70,7 +64,6 @@ services:
       timeout: 5s
     ports:
       - ':30054:30054' # Web UI
-    # privileged: False
     secrets:
       - sonarr_key
       - truenas_key
@@ -84,10 +77,6 @@ services:
       - seer_key
       - unifi_key
       - cleanuparr_key
-    # security_opt:
-    #   - no-new-privileges=true
-    # stdin_open: False
-    # tty: False
     user: '1337:1337'
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
