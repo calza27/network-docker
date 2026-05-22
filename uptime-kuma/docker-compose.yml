@@ -1,0 +1,22 @@
+services:
+  uptime-kuma:
+    image: louislam/uptime-kuma:2
+    container_name: uptime-kuma
+    ports:
+      - "31050:3001"
+    volumes:
+      - /data/docker/mounts/uptime-kuma/data:/app/data
+    environment:
+      - TZ=Australia/Melbourne
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:31050"]
+      interval: 30s
+      retries: 3
+      start_period: 10s
+      timeout: 5s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    restart: unless-stopped
