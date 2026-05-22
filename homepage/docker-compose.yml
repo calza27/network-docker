@@ -50,6 +50,8 @@ services:
       NVIDIA_VISIBLE_DEVICES: void
       PORT: '30054'
       TZ: Australia/Melbourne
+      PUID: 1337
+      PGID: 1337
     healthcheck:
       interval: 30s
       retries: 5
