@@ -9,7 +9,7 @@ services:
     environment:
       - TZ=Australia/Melbourne
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:31050"]
+      test: ["CMD", "curl", "-f", "http://localhost:3001"]
       interval: 30s
       retries: 3
       start_period: 10s
