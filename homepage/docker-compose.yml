@@ -7,8 +7,10 @@ secrets:
     file: /data/docker/secrets/homepage/cleanuparr.key
   jellyfin_key:
     file: /data/docker/secrets/homepage/jellyfin.key
-  nginx_key:
-    file: /data/docker/secrets/homepage/nginx.key
+  nginx_volo_key:
+    file: /data/docker/secrets/homepage/nginx_volo.key
+  nginx_emp_key:
+    file: /data/docker/secrets/homepage/nginx_emp.key
   prowlarr_key:
     file: /data/docker/secrets/homepage/prowlarr.key
   qbit_key:
@@ -39,7 +41,8 @@ services:
       HOMEPAGE_FILE_BOOKSHELF_KEY: /run/secrets/bookshelf_key
       HOMEPAGE_FILE_CLEANUPARR_KEY: /run/secrets/cleanuparr_key
       HOMEPAGE_FILE_JELLYFIN_KEY: /run/secrets/jellyfin_key
-      HOMEPAGE_FILE_NGINX_KEY: /run/secrets/nginx_key
+      HOMEPAGE_FILE_NGINX_VOLO_KEY: /run/secrets/nginx_volo_key
+      HOMEPAGE_FILE_NGINX_EMP_KEY: /run/secrets/nginx_emp_key
       HOMEPAGE_FILE_PROWLARR_KEY: /run/secrets/prowlarr_key
       HOMEPAGE_FILE_QBIT_KEY: /run/secrets/qbit_key
       HOMEPAGE_FILE_RADARR_KEY: /run/secrets/radarr_key
@@ -76,7 +79,8 @@ services:
       - bookshelf_key
       - bazarr_key
       - jellyfin_key
-      - nginx_key
+      - nginx_volo_key
+      - nginx_emp_key
       - prowlarr_key
       - qbit_key
       - seer_key
