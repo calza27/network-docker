@@ -5,7 +5,7 @@ services:
     ports:
       - '80:80'
       - '443:443'
-      - '81:81'
+      - '30020:81' # Admin Web UI
     environment:
       TZ: "Australia/Melbourne"
       DISABLE_IPV6: 'true'
