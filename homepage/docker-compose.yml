@@ -68,7 +68,7 @@ services:
         - http://127.0.0.1:30054/api/healthcheck
       timeout: 5s
     ports:
-      - ':30054:30054' # Web UI
+      - '30054:30054' # Web UI
     secrets:
       - sonarr_key
       - truenas_key
