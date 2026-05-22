@@ -1,0 +1,18 @@
+services:
+  speedtest-tracker:
+    image: lscr.io/linuxserver/speedtest-tracker:latest
+    container_name: speedtest-tracker
+    ports:
+      - 30220:80
+    environment:
+      - PUID=1337
+      - PGID=1337
+      - TZ=Australia/Melbourne
+      - APP_KEY=base64:QFAz+wiqqwxtlvhJcXw2ZRLd5YUkXLZvGfrvFNTX2Jc=
+      - APP_URL=http://localhost:30220
+      - DB_CONNECTION=sqlite
+      - SPEEDTEST_SCHEDULE=0 * * * * # Runs every hour (cron format)
+      - DISPLAY_TIMEZONE=Australia/Melbourne
+    volumes:
+      - /data/docker/mounts/speedtest-tracker/config:/config
+    restart: unless-stopped
