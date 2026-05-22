@@ -1,0 +1,25 @@
+secrets:
+  auth_key:
+    file: /data/docker/secrets/tailscale-cal/auth.key
+services:
+  tailscale-cal:
+    image: tailscale/tailscale:latest
+    container_name: tailscale-cal
+    hostname: docker-exit-node
+    environment:
+      - TS_AUTHKEY_FILE=/run/secrets/auth_key
+      - TS_STATE_DIR=/var/lib/tailscale
+      - TS_EXTRA_ARGS=--advertise-exit-node
+      - TS_ACCEPT_DNS=true
+      - TS_AUTH_ONCE=true
+      - TS_ROUTES=192.168.3.0/24
+    network_mode: host
+    volumes:
+      - /data/docker/mounts/tailscale-cal/tailscale-state:/var/lib/tailscale
+      - /dev/net/tun:/dev/net/tun
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    secrets:
+      - auth_key
+    restart: unless-stopped
