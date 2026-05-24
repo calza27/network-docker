@@ -11,8 +11,8 @@ services:
     ports:
       - "53:53/tcp"
       - "53:53/udp"
-      - "20720:80/tcp"
-      - "30720:443/tcp"
+      - "30053:80/tcp"
+      - "30453:443/tcp"
     environment:
       TZ: 'Australia/Melbourne'
       FTLCONF_webserver_api_password: ''
