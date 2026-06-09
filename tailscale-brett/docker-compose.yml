@@ -17,7 +17,7 @@ services:
       - TS_EXTRA_ARGS=--advertise-exit-node
       - TS_ACCEPT_DNS=true
       - TS_AUTH_ONCE=true
-      - TS_ROUTES=192.168.3.0/24
+      - TS_ROUTES=192.168.10.0/24
     network_mode: host
     volumes:
       - /data/docker/mounts/tailscale-brett/tailscale-state:/var/lib/tailscale
