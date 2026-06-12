@@ -53,7 +53,7 @@ case "$action" in
     pull)
         for container in "$containers"; do
             if [[ -d "$container" ]]; then
-                (cd "$container" && docker compose pull && docker container up -d) || fails+=("$container")
+                (cd "$container" && docker compose pull && docker compose up -d) || fails+=("$container")
             else
                 echo "Directory for container '$container' not found, skipping."
             fi
