@@ -23,7 +23,7 @@ shift
 
 containers=()
 if [[ "$1" == "all" ]]; then
-    containers=$(find . -maxdepth 2 -name "docker-compose.yml" -exec dirname {} \; | sed 's|^\./||')
+    mapfile -t containers < <(find . -maxdepth 2 -name "docker-compose.yml" -exec dirname {} \; | sed 's|^\./||')
 else
     containers="$@"
 fi
@@ -31,7 +31,7 @@ fi
 fails=()
 case "$action" in
     up)
-        for container in "$containers"; do
+        for container in "${containers[@]}"; do
             if [[ -d "$container" ]]; then
                 (cd "$container" && docker compose up -d) || fails+=("$container")
             else
@@ -41,7 +41,7 @@ case "$action" in
         done
         ;;
     down)
-        for container in "$containers"; do
+        for container in "${containers[@]}"; do
             if [[ -d "$container" ]]; then
                 (cd "$container" && docker compose down) || fails+=("$container")
             else
@@ -51,7 +51,7 @@ case "$action" in
         done
         ;;
     pull)
-        for container in "$containers"; do
+        for container in "${containers[@]}"; do
             if [[ -d "$container" ]]; then
                 (cd "$container" && docker compose pull && docker compose up -d) || fails+=("$container")
             else
