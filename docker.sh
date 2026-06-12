@@ -25,7 +25,7 @@ containers=()
 if [[ "$1" == "all" ]]; then
     mapfile -t containers < <(find . -maxdepth 2 -name "docker-compose.yml" -exec dirname {} \; | sed 's|^\./||')
 else
-    containers="$@"
+    containers=("$@")
 fi
 
 fails=()
