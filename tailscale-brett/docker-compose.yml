@@ -14,7 +14,6 @@ services:
     environment:
       - TS_AUTHKEY_FILE=/run/secrets/auth_key
       - TS_STATE_DIR=/var/lib/tailscale
-      # - TS_EXTRA_ARGS=--advertise-exit-node
       - TS_ACCEPT_DNS=true
       - TS_AUTH_ONCE=true
       - TS_ROUTES=192.168.10.0/24
