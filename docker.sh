@@ -58,6 +58,8 @@ case "$action" in
                 echo "Directory for container '$container' not found, skipping."
             fi
             echo ""
+        done
+        ;;
     *)
         usage
         die "Unknown action: $action"
