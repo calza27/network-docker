@@ -89,7 +89,7 @@ services:
       - seer_key
       - unifi_key
       - cleanuparr_key
-    user: '1337:1337'
+    user: '1001:1001'
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /data/docker/mounts/homepage:/app/config
