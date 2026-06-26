@@ -99,4 +99,5 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /data/docker/mounts/homepage:/app/config
+      - /data/docker/mounts/homepage/icons:/app/public/icons:ro
     restart: unless-stopped
