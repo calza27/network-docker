@@ -1,8 +1,6 @@
 secrets:
   bazarr_key:
     file: /data/docker/secrets/homepage/bazarr.key
-  bookshelf_key:
-    file: /data/docker/secrets/homepage/bookshelf.key
   cleanuparr_key:
     file: /data/docker/secrets/homepage/cleanuparr.key
   jellyfin_key:
@@ -21,8 +19,6 @@ secrets:
     file: /data/docker/secrets/homepage/radarr.key
   seer_key:
     file: /data/docker/secrets/homepage/seer.key
-  shelfmark_key:
-    file: /data/docker/secrets/homepage/shelfmark.key
   sonarr_key:
     file: /data/docker/secrets/homepage/sonarr.key
   truenas_key:
@@ -43,7 +39,6 @@ services:
     environment:
       HOMEPAGE_ALLOWED_HOSTS: '*'
       HOMEPAGE_FILE_BAZARR_KEY: /run/secrets/bazarr_key
-      HOMEPAGE_FILE_BOOKSHELF_KEY: /run/secrets/bookshelf_key
       HOMEPAGE_FILE_CLEANUPARR_KEY: /run/secrets/cleanuparr_key
       HOMEPAGE_FILE_JELLYFIN_KEY: /run/secrets/jellyfin_key
       HOMEPAGE_FILE_NEXTCLOUD_KEY: /run/secrets/nextcloud_key
@@ -53,7 +48,6 @@ services:
       HOMEPAGE_FILE_QBIT_KEY: /run/secrets/qbit_key
       HOMEPAGE_FILE_RADARR_KEY: /run/secrets/radarr_key
       HOMEPAGE_FILE_SEER_KEY: /run/secrets/seer_key
-      HOMEPAGE_FILE_SHELFMARK_KEY: /run/secrets/shelfmark_key
       HOMEPAGE_FILE_SONARR_KEY: /run/secrets/sonarr_key
       HOMEPAGE_FILE_TRUENAS_KEY: /run/secrets/truenas_key
       HOMEPAGE_FILE_UNIFI_KEY: /run/secrets/unifi_key
@@ -83,7 +77,6 @@ services:
       - sonarr_key
       - truenas_key
       - radarr_key
-      - bookshelf_key
       - bazarr_key
       - jellyfin_key
       - nextcloud_key
@@ -94,10 +87,8 @@ services:
       - seer_key
       - unifi_key
       - cleanuparr_key
-      - shelfmark_key
     user: '1000:1000'
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /data/docker/mounts/homepage:/app/config
-      - /data/docker/mounts/homepage/icons:/app/public/icons:ro
     restart: unless-stopped
