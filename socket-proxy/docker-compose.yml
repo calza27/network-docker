@@ -12,6 +12,8 @@ services:
       - SERVICES=1
       - TASKS=1
       - POST=0
+      - VERSION=1
+      - INFO=1
     group_add:
       - 1337 # app group
       - 1001 # docker group
