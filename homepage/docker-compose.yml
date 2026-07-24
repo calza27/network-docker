@@ -3,6 +3,8 @@ secrets:
     file: /data/docker/secrets/homepage/bazarr.key
   cleanuparr_key:
     file: /data/docker/secrets/homepage/cleanuparr.key
+  immich_key:
+    file: /data/docker/secrets/homepage/immich.key
   jellyfin_key:
     file: /data/docker/secrets/homepage/jellyfin.key
   nextcloud_key:
@@ -40,6 +42,7 @@ services:
       HOMEPAGE_ALLOWED_HOSTS: '*'
       HOMEPAGE_FILE_BAZARR_KEY: /run/secrets/bazarr_key
       HOMEPAGE_FILE_CLEANUPARR_KEY: /run/secrets/cleanuparr_key
+      HOMEPAGE_FILE_IMMICH_KEY: /run/secrets/immich_key
       HOMEPAGE_FILE_JELLYFIN_KEY: /run/secrets/jellyfin_key
       HOMEPAGE_FILE_NEXTCLOUD_KEY: /run/secrets/nextcloud_key
       HOMEPAGE_FILE_NGINX_VOLO_KEY: /run/secrets/nginx_volo_key
@@ -74,19 +77,20 @@ services:
     ports:
       - '30054:30054' # Web UI
     secrets:
-      - sonarr_key
-      - truenas_key
-      - radarr_key
       - bazarr_key
+      - cleanuparr_key
+      - immich_key
       - jellyfin_key
       - nextcloud_key
-      - nginx_volo_key
       - nginx_emp_key
+      - nginx_volo_key
       - prowlarr_key
       - qbit_key
+      - radarr_key
       - seer_key
+      - sonarr_key
+      - truenas_key
       - unifi_key
-      - cleanuparr_key
     user: '1000:1000'
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
