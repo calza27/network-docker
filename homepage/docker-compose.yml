@@ -9,6 +9,8 @@ secrets:
     file: /data/docker/secrets/homepage/immich.key
   jellyfin_key:
     file: /data/docker/secrets/homepage/jellyfin.key
+  librarr_key:
+    file: /data/docker/secrets/homepage/librarr.key
   nextcloud_key:
     file: /data/docker/secrets/homepage/nextcloud.key
   nginx_volo_key:
@@ -47,6 +49,7 @@ services:
       HOMEPAGE_FILE_CLEANUPARR_KEY: /run/secrets/cleanuparr_key
       HOMEPAGE_FILE_IMMICH_KEY: /run/secrets/immich_key
       HOMEPAGE_FILE_JELLYFIN_KEY: /run/secrets/jellyfin_key
+      HOMEPAGE_FILE_LIBRARR_KEY: /run/secrets/librarr_key
       HOMEPAGE_FILE_NEXTCLOUD_KEY: /run/secrets/nextcloud_key
       HOMEPAGE_FILE_NGINX_VOLO_KEY: /run/secrets/nginx_volo_key
       HOMEPAGE_FILE_NGINX_EMP_KEY: /run/secrets/nginx_emp_key
@@ -85,6 +88,7 @@ services:
       - cleanuparr_key
       - immich_key
       - jellyfin_key
+      - librarr_key
       - nextcloud_key
       - nginx_emp_key
       - nginx_volo_key
