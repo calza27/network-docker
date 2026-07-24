@@ -1,4 +1,6 @@
 secrets:
+  audiobookshelf_key:
+    file: /data/docker/secrets/homepage/audiobookshelf.key
   bazarr_key:
     file: /data/docker/secrets/homepage/bazarr.key
   cleanuparr_key:
@@ -40,6 +42,7 @@ services:
           memory: 256M
     environment:
       HOMEPAGE_ALLOWED_HOSTS: '*'
+      HOMEPAGE_FILE_AUDIOBOOKSHELF_KEY: /run/secrets/audiobookshelf_key
       HOMEPAGE_FILE_BAZARR_KEY: /run/secrets/bazarr_key
       HOMEPAGE_FILE_CLEANUPARR_KEY: /run/secrets/cleanuparr_key
       HOMEPAGE_FILE_IMMICH_KEY: /run/secrets/immich_key
@@ -77,6 +80,7 @@ services:
     ports:
       - '30054:30054' # Web UI
     secrets:
+      - audiobookshelf_key
       - bazarr_key
       - cleanuparr_key
       - immich_key
