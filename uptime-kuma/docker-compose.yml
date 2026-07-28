@@ -13,6 +13,7 @@ services:
       - /data/docker/mounts/uptime-kuma/data:/app/data
     environment:
       - TZ=Australia/Melbourne
+      - NODE_OPTIONS=--dns-result-order=ipv4first
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3001"]
       interval: 30s
