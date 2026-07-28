@@ -60,6 +60,7 @@ services:
       HOMEPAGE_FILE_SONARR_KEY: /run/secrets/sonarr_key
       HOMEPAGE_FILE_TRUENAS_KEY: /run/secrets/truenas_key
       HOMEPAGE_FILE_UNIFI_KEY: /run/secrets/unifi_key
+      NODE_OPTIONS: --dns-result-order=ipv4first
       NVIDIA_VISIBLE_DEVICES: void
       PORT: '30054'
       TZ: Australia/Melbourne
