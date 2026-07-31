@@ -7,6 +7,9 @@ services:
         limits:
           cpus: '1'
           memory: 512M
+    sysctls:
+      - net.ipv6.conf.all.disable_ipv6=1
+      - net.ipv6.conf.default.disable_ipv6=1
     ports:
       - "31050:3001"
     volumes:
