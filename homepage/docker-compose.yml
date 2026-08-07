@@ -42,9 +42,6 @@ services:
         limits:
           cpus: '1'
           memory: 256M
-    sysctls:
-      - net.ipv6.conf.all.disable_ipv6=1
-      - net.ipv6.conf.default.disable_ipv6=1
     environment:
       HOMEPAGE_ALLOWED_HOSTS: '*'
       HOMEPAGE_FILE_AUDIOBOOKSHELF_KEY: /run/secrets/audiobookshelf_key
