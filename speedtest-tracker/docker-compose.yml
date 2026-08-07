@@ -18,7 +18,7 @@ services:
       - DB_CONNECTION=sqlite
       - SPEEDTEST_SCHEDULE=0 * * * * # Runs every hour (cron format)
       - DISPLAY_TIMEZONE=Australia/Melbourne
-      - DISABLE_IPV6=true # disable IPv6 listening
+      - LISTEN_IPV6=false # disable IPv6 listening
     volumes:
       - /data/docker/mounts/speedtest-tracker/config:/config
     restart: unless-stopped
