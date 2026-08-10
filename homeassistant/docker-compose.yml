@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  # mosquitto:
+  #   image: eclipse-mosquitto:2
+  #   container_name: mosquitto
+  #   restart: unless-stopped
+  #   ports:
+  #     - "31883:1883"
+  #   volumes:
+  #     - /data/docker/mounts/mosquitto/config/mosquitto.conf:/mosquitto/config/mosquitto.conf
+  #     - /data/docker/mounts/mosquitto/data:/mosquitto/data
+  #     - /data/docker/mounts/mosquitto/log:/mosquitto/log
+  #   environment:
+  #     - TZ=Australia/Melbourne
+
+  # zigbee2mqtt:
+  #   image: koenkk/zigbee2mqtt:latest
+  #   container_name: zigbee2mqtt
+  #   restart: unless-stopped
+  #   volumes:
+  #     - /data/docker/mounts/zigbee2mqtt/data:/app/data
+  #     - /run/udev:/run/udev:ro
+  #   ports:
+  #     - "31080:8080"
+  #   devices:
+  #     # Map your physical USB stick path to the container
+  #     - /dev/serial/by-id/usb-Silicon_Labs_Your_Stick_ID_Here:/dev/ttyUSB0
+  #   depends_on:
+  #     - mosquitto
+  #   environment:
+  #     - TZ=Australia/Melbourne
+
+  homeassistant:
+    image: ghcr.io/home-assistant/home-assistant:stable
+    container_name: homeassistant
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - /data/docker/mounts/homeassistant/config:/config  
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - "38123:8123"
+    # depends_on:
+    #   - mosquitto
+    environment:
+      - TZ=Australia/Melbourne
