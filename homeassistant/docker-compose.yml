@@ -35,7 +35,6 @@ services:
     image: ghcr.io/home-assistant/home-assistant:stable
     container_name: homeassistant
     restart: unless-stopped
-    network_mode: host
     volumes:
       - /data/docker/mounts/homeassistant/config:/config  
       - /etc/localtime:/etc/localtime:ro
