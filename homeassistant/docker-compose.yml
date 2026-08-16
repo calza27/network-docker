@@ -31,6 +31,16 @@ services:
     environment:
       - TZ=Australia/Melbourne
 
+  matter-server:
+    image: ghcr.io/home-assistant/matter-server:stable
+    container_name: matter_server
+    restart: unless-stopped
+    network_mode: host
+    security_opt:
+      - apparmor:unconfined
+    volumes:
+      - /data/docker/mounts/matter:/data
+
   homeassistant:
     image: ghcr.io/home-assistant/home-assistant:stable
     container_name: homeassistant
@@ -42,5 +52,6 @@ services:
       - "38123:8123"
     depends_on:
       - mosquitto
+      - matter-server
     environment:
       - TZ=Australia/Melbourne
