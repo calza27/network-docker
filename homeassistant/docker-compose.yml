@@ -32,7 +32,7 @@ services:
       - TZ=Australia/Melbourne
 
   matter-server:
-    image: ghcr.io/home-assistant/matter-server:stable
+    image: ghcr.io/home-assistant-libs/python-matter-server:stable
     container_name: matter_server
     restart: unless-stopped
     network_mode: host
