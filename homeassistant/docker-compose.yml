@@ -32,7 +32,7 @@ services:
       - TZ=Australia/Melbourne
 
   matter-server:
-    image: ghcr.io/home-assistant-libs/python-matter-server:stable
+    image: ghcr.io/matter-js/matterjs-server:stable
     container_name: matter_server
     restart: unless-stopped
     network_mode: host
@@ -40,7 +40,8 @@ services:
       - apparmor:unconfined
     volumes:
       - /data/docker/mounts/matter:/data
-
+      - /run/dbus:/run/dbus:ro
+    
   homeassistant:
     image: ghcr.io/home-assistant/home-assistant:stable
     container_name: homeassistant
