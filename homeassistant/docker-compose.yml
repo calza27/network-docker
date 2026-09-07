@@ -50,8 +50,6 @@ services:
     volumes:
       - /data/docker/mounts/homeassistant/config:/config  
       - /etc/localtime:/etc/localtime:ro
-    # ports:
-    #   - "38123:8123"
     depends_on:
       - mosquitto
       - matter-server
