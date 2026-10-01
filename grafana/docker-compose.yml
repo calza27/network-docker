@@ -10,3 +10,13 @@ services:
       - /data/docker/mounts/grafana:/var/lib/grafana
     user: '1000:1000'
     restart: unless-stopped
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    ports:
+      - '9090:9090'
+    volumes:
+      - /data/docker/configs/grafana/prometheus.yml:/etc/prometheus/prometheus.yml
+    user: '1000:1000'
+    restart: unless-stopped
