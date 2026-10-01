@@ -24,3 +24,6 @@ services:
     networks:
       - monitoring
     restart: unless-stopped
+
+networks:
+  monitoring:
