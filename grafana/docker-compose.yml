@@ -1,0 +1,11 @@
+services:
+  grafana:
+    image: grafana/grafana-enterprise
+    container_name: grafana
+    restart: unless-stopped
+    environment:
+      - GF_SERVER_ROOT_URL=http://grafana.emporer.net/
+    ports:
+      - '3000:3000'
+    volumes:
+      - /data/docker/mounts/grafana:/var/lib/grafana
