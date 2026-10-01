@@ -9,8 +9,8 @@ services:
     volumes:
       - /data/docker/mounts/grafana:/var/lib/grafana
     user: '1000:1000'
-    # networks:
-    #   - monitoring
+    networks:
+      - monitoring
     restart: unless-stopped
 
   prometheus:
@@ -21,6 +21,6 @@ services:
     volumes:
       - /data/docker/configs/grafana/prometheus.yml:/etc/prometheus/prometheus.yml
     user: '1000:1000'
-    # networks:
-    #   - monitoring
+    networks:
+      - monitoring
     restart: unless-stopped
