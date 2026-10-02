@@ -19,12 +19,43 @@ services:
     ports:
       - '9090:9090'
     volumes:
-      - /data/docker/configs/grafana/prometheus.yml:/etc/prometheus/prometheus.yml
       - /data/docker/mounts/prometheus:/prometheus
+      - /data/docker/configs/grafana/prometheus.yml:/etc/prometheus/prometheus.yml
     user: '1000:1000'
+    networks:
+      - monitoring
+    restart: unless-stopped
+
+  loki:
+    image: grafana/loki
+    container_name: loki
+    ports:
+      - "3100:3100"
+    volumes:
+      - /data/docker/mounts/loki:/tmp/loki
+      - /data/docker/configs/grafana/loki-config.yml:/etc/loki/local-config.yml
+    command: -config.file=/etc/loki/local-config.yml
+    networks:
+      - monitoring
+    restart: unless-stopped
+
+  alloy:
+    image: grafana/alloy
+    container_name: alloy
+    ports:
+      - "12345:12345"
+    volumes:
+      - /data/docker/mounts/alloy:/var/lib/alloy
+      - /data/docker/configs/grafana/config.alloy:/etc/alloy/config.alloy:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+    command: run --server.http.listen-addr=0.0.0.0:12345 /etc/alloy/config.alloy
+    depends_on:
+      - loki
     networks:
       - monitoring
     restart: unless-stopped
 
 networks:
   monitoring:
+    name: monitoring
