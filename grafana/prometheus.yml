@@ -12,9 +12,11 @@ scrape_configs:
     scrape_interval: 5s
     static_configs:
       - targets: ['192.168.10.4:9091']
-  - job_name: 'pihole-primary'
+  - job_name: 'pihole'
     static_configs:
       - targets: ['192.168.10.4:9617']
-  - job_name: 'pihole-secondary'
-    static_configs:
+        labels:
+          instance: 'primary'
       - targets: ['192.168.10.5:9617']
+        labels:
+          instance: 'secondary'
