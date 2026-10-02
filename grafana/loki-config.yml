@@ -29,7 +29,6 @@ query_range:
       embedded_cache:
         enabled: true
 
-# Add this block to fix the "log volume has not been configured" warning
 limits_config:
   volume_enabled: true
 
