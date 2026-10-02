@@ -7,4 +7,4 @@ scrape_configs:
       - targets: ['localhost:9090']
   - job_name: 'nginx-proxy-manager'
     static_configs:
-      - targets: ['http://nginx.emporer.net:82/nginx_status']
+      - targets: ['nginx.emporer.net:82/nginx_status']
