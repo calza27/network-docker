@@ -19,8 +19,8 @@ common:
 query_range:
   results_cache:
     cache:
-      embedded_collector:
-        store: inmemory
+      embedded_cache:
+        enabled: true
 
 schema_config:
   configs:
