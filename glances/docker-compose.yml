@@ -30,7 +30,7 @@ services:
     ports:
       - '9091:9091'   # Prometheus exporter port
     environment:
-      - "GLANCES_OPT=-q --export prometheus"
+      - "GLANCES_OPT=-q -C /glances/conf/glances.conf --export prometheus"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /etc/os-release:/etc/os-release:ro
