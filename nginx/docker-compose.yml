@@ -19,3 +19,14 @@ services:
       - /data/docker/mounts/nginx/data:/data
       - /data/docker/mounts/nginx/certs:/etc/letsencrypt
     restart: unless-stopped
+
+  nginx-exporter:
+    image: 'nginx/nginx-prometheus-exporter:latest'
+    container_name: nginx-prometheus-exporter
+    restart: unless-stopped
+    ports:
+      - '9113:9113' # The port Prometheus will actually scrape
+    command:
+      - '-nginx.scrape-uri=http://nginx-proxy-manager:82/nginx_status'
+    depends_on:
+      - nginx-proxy-manager
