@@ -25,3 +25,25 @@ services:
       - SYS_NICE
       - CAP_SYS_TIME
     restart: unless-stopped
+    networks:
+      - pihole-net
+
+  pihole-exporter:
+    container_name: pihole-exporter
+    image: ekofr/pihole-exporter:latest
+    ports:
+      - "9617:9617"
+    environment:
+      # Use internal Docker networking to reach Pi-hole via its service name
+      - PIHOLE_HOSTNAME=http://pihole:80
+      # Required flag enabling the exporter to process Pi-hole v6 API structure
+      - PIHOLE_VERSION=v6
+    restart: unless-stopped
+    depends_on:
+      - pihole
+    networks:
+      - pihole-net
+
+networks:
+  pihole-net:
+    driver: bridge
