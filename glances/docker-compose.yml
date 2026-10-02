@@ -1,17 +1,36 @@
 services:
-  glances:
+  glances-web:
     image: nicolargo/glances:latest-full
-    container_name: glances
+    container_name: glances-web
     deploy:
       resources:
         limits:
-          cpus: '1'
-          memory: 256M
+          cpus: '0.5'
+          memory: 128M
     ports:
       - '61208:61208' # Web UI
-      - "9091:9091"   # Prometheus exporter port
     environment:
       - "GLANCES_OPT=-w"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /etc/os-release:/etc/os-release:ro
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+    pid: host
+    restart: unless-stopped
+
+  glances-exporter:
+    image: nicolargo/glances:latest-full
+    container_name: glances-exporter
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 128M
+    ports:
+      - '9091:9091'   # Prometheus exporter port
+    environment:
+      - "GLANCES_OPT=-q --export prometheus"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /etc/os-release:/etc/os-release:ro
