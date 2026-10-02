@@ -31,6 +31,14 @@ query_range:
 
 limits_config:
   volume_enabled: true
+  retention_period: 336h # 14 days (14 * 24h)
+
+compactor:
+  working_directory: /tmp/loki/compactor
+  compaction_interval: 10m
+  retention_enabled: true
+  retention_delete_delay: 2h
+  retention_delete_worker_count: 150
 
 schema_config:
   configs:
