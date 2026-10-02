@@ -20,6 +20,7 @@ services:
       - '9090:9090'
     volumes:
       - /data/docker/configs/grafana/prometheus.yml:/etc/prometheus/prometheus.yml
+      - /data/docker/mounts/prometheus:/prometheus
     user: '1000:1000'
     networks:
       - monitoring
