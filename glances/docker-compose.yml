@@ -9,6 +9,7 @@ services:
           memory: 256M
     ports:
       - '61208:61208' # Web UI
+      - "9091:9091"   # Prometheus exporter port
     environment:
       - "GLANCES_OPT=-w"
     volumes:
@@ -16,6 +17,7 @@ services:
       - /etc/os-release:/etc/os-release:ro
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro
+      - /data/docker/configs/glances/glances.conf:/glances/conf/glances.conf:ro
     pid: host
     network_mode: host
     restart: unless-stopped
