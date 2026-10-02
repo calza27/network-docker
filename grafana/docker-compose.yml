@@ -52,7 +52,7 @@ services:
       - /data/docker/configs/grafana/config.alloy:/etc/alloy/config.alloy:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /var/lib/docker/containers:/var/lib/docker/containers:ro
-    command: run --server.http.listen-addr=0.0.0.0:12345 /etc/alloy/config.alloy
+    command: run --storage.path=/var/lib/alloy --server.http.listen-addr=0.0.0.0:12345 /etc/alloy/config.alloy
     user: '1000:1337'
     networks:
       - monitoring
