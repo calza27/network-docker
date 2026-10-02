@@ -9,6 +9,7 @@ services:
           memory: 256M
     ports:
       - '80:80'
+      - '82:82'
       - '443:443'
       - '30020:81' # Admin Web UI
     environment:
