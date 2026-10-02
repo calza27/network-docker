@@ -22,12 +22,16 @@ ingester:
       kvstore:
         store: inmemory
       replication_factor: 1
-      
+
 query_range:
   results_cache:
     cache:
       embedded_cache:
         enabled: true
+
+# Add this block to fix the "log volume has not been configured" warning
+limits_config:
+  volume_enabled: true
 
 schema_config:
   configs:
