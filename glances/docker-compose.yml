@@ -19,5 +19,4 @@ services:
       - /sys:/host/sys:ro
       - /data/docker/configs/glances/glances.conf:/glances/conf/glances.conf:ro
     pid: host
-    network_mode: host
     restart: unless-stopped
