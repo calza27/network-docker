@@ -9,6 +9,11 @@ discovery.relabel "docker_logs" {
     source_labels = ["__meta_docker_container_name"]
     target_label  = "container"
   }
+
+  rule {
+    replacement  = "emporer.net"
+    target_label = "host"
+  }
 }
 
 loki.source.docker "local_docker" {
