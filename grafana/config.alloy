@@ -24,15 +24,11 @@ loki.source.docker "local_docker" {
 
 loki.write "local_loki" {
   endpoint {
-    url = "http://loki:3100/loki/api/v1/push"
-
-    # Send smaller batches to avoid hitting the 4MB limit
-    batch_size = "256KiB"
-    batch_wait = "1s"
-    
-    # Configure backoff delays so retries don't hammer Loki
-    min_backoff_period = "500ms"
-    max_backoff_period = "5s"
-    max_retries        = 10
+    url                 = "http://loki:3100/loki/api/v1/push"
+    batch_size          = "256KiB"
+    batch_wait          = "1s"
+    min_backoff_period  = "500ms"
+    max_backoff_period  = "5s"
+    max_backoff_retries = 10
   }
 }
