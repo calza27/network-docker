@@ -13,6 +13,10 @@ scrape_configs:
     static_configs:
       - targets: ['192.168.10.4:9091']
       - targets: ['192.168.10.5:9091']
+  - job_name: 'jellyfin'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['192.168.10.4:30013']
   - job_name: 'pihole'
     static_configs:
       - targets: ['192.168.10.4:9617']
