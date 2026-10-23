@@ -127,7 +127,6 @@ func postData(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "reading body: "+err.Error(), http.StatusBadRequest)
 		return
 	}
-	log.Printf("payload received: %s", body)
 
 	var payload unifiPayload
 	if err := json.Unmarshal(body, &payload); err != nil {
