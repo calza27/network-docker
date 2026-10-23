@@ -49,10 +49,10 @@ var cameraNames map[string]string
 
 type unifiPayload struct {
 	Alarm struct {
-		Name    string `json:"name"`
-		Sources []struct {
+		Name     string `json:"name"`
+		Triggers []struct {
 			Device string `json:"device"`
-		} `json:"sources"`
+		} `json:"triggers"`
 	} `json:"alarm"`
 }
 
@@ -142,15 +142,17 @@ func postData(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "alarm.name must match "+metricNameRe.String(), http.StatusBadRequest)
 		return
 	}
-	if len(payload.Alarm.Sources) == 0 {
-		log.Printf("rejecting event %q: no sources", event)
-		http.Error(w, "alarm.sources must not be empty", http.StatusBadRequest)
+	if len(payload.Alarm.Triggers) == 0 {
+		log.Printf("rejecting event %q: no triggers", event)
+		http.Error(w, "alarm.triggers must not be empty", http.StatusBadRequest)
 		return
 	}
 
-	camera := cameraName(payload.Alarm.Sources[0].Device)
-	recordEvent(event, camera)
-	log.Printf("recorded event %q from camera %q (%q)", event, camera, payload.Alarm.Sources[0].Device)
+	for _, t := range payload.Alarm.Triggers {
+		camera := cameraName(t.Device)
+		recordEvent(event, camera)
+		log.Printf("recorded event %q from camera %q (%q)", event, camera, t.Device)
+	}
 
 	w.WriteHeader(http.StatusAccepted)
 }

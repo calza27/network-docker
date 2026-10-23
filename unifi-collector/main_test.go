@@ -40,8 +40,10 @@ func writeFile(t *testing.T, contents string) string {
 	return path
 }
 
+// event builds a payload triggered by device. sources lists every camera the
+// alarm covers, with camera_2 first, to catch reading sources instead of triggers.
 func event(name, device string) string {
-	return fmt.Sprintf(`{"alarm":{"name":%q,"sources":[{"device":%q,"type":"include"}]},"timestamp":1700000000}`, name, device)
+	return fmt.Sprintf(`{"alarm":{"name":%q,"sources":[{"device":"camera_2","type":"include"},{"device":%q,"type":"include"}],"triggers":[{"key":"person","device":%q}]},"timestamp":1700000000}`, name, device, device)
 }
 
 func post(body string) *httptest.ResponseRecorder {
@@ -225,15 +227,15 @@ func TestPostData(t *testing.T) {
 		}
 	})
 
-	t.Run("uses only the first source", func(t *testing.T) {
+	t.Run("records every trigger", func(t *testing.T) {
 		resetState(t)
 
-		body := `{"alarm":{"name":"person_detected","sources":[{"device":"camera_1"},{"device":"camera_2"}]}}`
+		body := `{"alarm":{"name":"person_detected","triggers":[{"device":"camera_1"},{"device":"camera_2"},{"device":"camera_1"}]}}`
 		if rec := post(body); rec.Code != http.StatusAccepted {
 			t.Fatalf("got %d, want %d", rec.Code, http.StatusAccepted)
 		}
 
-		want := map[string]map[string]int64{"person_detected": {"front door": 1}}
+		want := map[string]map[string]int64{"person_detected": {"front door": 2, "back door": 1}}
 		if fmt.Sprint(metricsCache) != fmt.Sprint(want) {
 			t.Errorf("metricsCache = %v, want %v", metricsCache, want)
 		}
@@ -248,8 +250,8 @@ func TestPostData(t *testing.T) {
 		{name: "alarm name starting with digit", body: event("1st_person", "camera_1")},
 		{name: "empty alarm name", body: event("", "camera_1")},
 		{name: "no alarm", body: `{}`},
-		{name: "empty sources", body: `{"alarm":{"name":"person_detected","sources":[]}}`},
-		{name: "missing sources", body: `{"alarm":{"name":"person_detected"}}`},
+		{name: "empty triggers", body: `{"alarm":{"name":"person_detected","triggers":[]}}`},
+		{name: "missing triggers", body: `{"alarm":{"name":"person_detected","sources":[{"device":"camera_1"}]}}`},
 		{name: "body over size limit", body: `{"alarm":{"name":"` + strings.Repeat("a", maxBodyBytes) + `"}}`},
 	}
 	for _, tt := range rejected {

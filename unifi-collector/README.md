@@ -23,18 +23,19 @@ Only these fields of the body are used:
 {
   "alarm": {
     "name": "person_detected",
-    "sources": [{ "device": "camera_1" }]
+    "triggers": [{ "device": "camera_1" }]
   }
 }
 ```
 
 - `alarm.name` becomes the metric name, so it must be a valid Prometheus metric name: letters, digits, `_` and `:`, not starting with a digit. Name alarms in UniFi Protect accordingly, e.g. `person_detected` rather than `Person Detected`.
-- `alarm.sources[0].device` is looked up in `cameras.yml` to get the camera's friendly name. Cameras not listed there are recorded under their raw ID. Any further sources are ignored.
+- Each entry in `alarm.triggers` is counted once, with its `device` looked up in `cameras.yml` to get the camera's friendly name. Cameras not listed there are recorded under their raw ID.
+- `alarm.sources` is ignored: it lists every camera the alarm covers, not the one that fired.
 
 | Response | Meaning |
 |---|---|
 | `202 Accepted` | Event recorded |
-| `400 Bad Request` | Body is not JSON, `alarm.name` is not a valid metric name, or `alarm.sources` is empty |
+| `400 Bad Request` | Body is not JSON, `alarm.name` is not a valid metric name, or `alarm.triggers` is empty |
 | `401 Unauthorized` | Missing or wrong bearer token |
 
 Rejected events are also logged with the reason.
@@ -138,7 +139,7 @@ Add a job to `grafana/prometheus.yml`:
 ```sh
 curl -i -X POST http://192.168.10.4:30071/metrics \
   -H "Authorization: Bearer $(cat /data/docker/secrets/unifi-collector/auth.key)" \
-  -d '{"alarm":{"name":"person_detected","sources":[{"device":"camera_1"}]}}'
+  -d '{"alarm":{"name":"person_detected","triggers":[{"device":"camera_1"}]}}'
 
 curl http://192.168.10.4:30071/metrics
 ```
