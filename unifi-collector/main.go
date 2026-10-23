@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"io"
 	"log"
 	"maps"
 	"net/http"
@@ -121,8 +122,15 @@ func requireBearer(token string, next http.HandlerFunc) http.HandlerFunc {
 func postData(w http.ResponseWriter, r *http.Request) {
 	r.Body = http.MaxBytesReader(w, r.Body, maxBodyBytes)
 
+	body, err := io.ReadAll(r.Body)
+	if err != nil {
+		http.Error(w, "reading body: "+err.Error(), http.StatusBadRequest)
+		return
+	}
+	log.Printf("payload received: %s", body)
+
 	var payload unifiPayload
-	if err := json.NewDecoder(r.Body).Decode(&payload); err != nil {
+	if err := json.Unmarshal(body, &payload); err != nil {
 		http.Error(w, "invalid JSON body: "+err.Error(), http.StatusBadRequest)
 		return
 	}
@@ -142,7 +150,7 @@ func postData(w http.ResponseWriter, r *http.Request) {
 
 	camera := cameraName(payload.Alarm.Sources[0].Device)
 	recordEvent(event, camera)
-	log.Printf("recorded event %q from camera %q", event, camera)
+	log.Printf("recorded event %q from camera %q (%q)", event, camera, payload.Alarm.Sources[0].Device)
 
 	w.WriteHeader(http.StatusAccepted)
 }
