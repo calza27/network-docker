@@ -1,5 +1,5 @@
 global:
-  scrape_interval: 15s
+  scrape_interval: 60s
 
 scrape_configs:
   - job_name: 'prometheus'
@@ -14,7 +14,6 @@ scrape_configs:
       - targets: ['192.168.10.4:9091']
       - targets: ['192.168.10.5:9091']
   - job_name: 'jellyfin'
-    scrape_interval: 5s
     static_configs:
       - targets: ['192.168.10.5:9594']
   - job_name: 'pihole'
@@ -25,3 +24,6 @@ scrape_configs:
       - targets: ['192.168.10.5:9617']
         labels:
           instance: 'secondary'
+  - job_name: 'unifi-collector'
+    static_configs:
+      - targets: ['192.168.10.4:30071']
