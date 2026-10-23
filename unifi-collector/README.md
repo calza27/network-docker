@@ -28,7 +28,7 @@ Only these fields of the body are used:
 }
 ```
 
-- `alarm.name` becomes the metric name, so it must be a valid Prometheus metric name: letters, digits, `_` and `:`, not starting with a digit. Name alarms in UniFi Protect accordingly, e.g. `person_detected` rather than `Person Detected`.
+- `alarm.name` becomes the metric name, prefixed with `unifi_protect_`: an alarm called `person_detected` is exported as `unifi_protect_person_detected`. The alarm name must therefore be a valid Prometheus metric name: letters, digits, `_` and `:`, not starting with a digit. Name alarms in UniFi Protect accordingly, e.g. `person_detected` rather than `Person Detected`.
 - Each entry in `alarm.triggers` is counted once, with its `device` looked up in `cameras.yml` to get the camera's friendly name. Cameras not listed there are recorded under their raw ID.
 - `alarm.sources` is ignored: it lists every camera the alarm covers, not the one that fired.
 
@@ -45,10 +45,10 @@ Rejected events are also logged with the reason.
 No authentication. Returns the counts since the last scrape in Prometheus text format, then clears them:
 
 ```
-# HELP person_detected A count of the number of people detected
-# TYPE person_detected gauge
-person_detected{camera="back door"} 3
-person_detected{camera="front door"} 1
+# HELP unifi_protect_person_detected A count of the number of people detected
+# TYPE unifi_protect_person_detected gauge
+unifi_protect_person_detected{camera="back door"} 3
+unifi_protect_person_detected{camera="front door"} 1
 ```
 
 If nothing has happened since the last scrape, the response is empty.
@@ -56,8 +56,8 @@ If nothing has happened since the last scrape, the response is empty.
 The metrics are gauges rather than counters because each value is a count for one scrape interval, not a running total. To get totals, add them up over a time range:
 
 ```promql
-sum_over_time(person_detected[24h])                         # per camera, last 24h
-sum by (camera) (sum_over_time(person_detected[$__range]))  # over the dashboard's time range
+sum_over_time(unifi_protect_person_detected[24h])                         # per camera, last 24h
+sum by (camera) (sum_over_time(unifi_protect_person_detected[$__range]))  # over the dashboard's time range
 ```
 
 Because each scrape empties the counts, only one scraper should hit this endpoint. With two, each would receive only part of the events.
@@ -85,7 +85,7 @@ The file is only read at startup, so restart the container after editing it.
 
 ### Metric descriptions
 
-The `# HELP` text for each metric comes from the `metricHelp` map in `main.go`. Alarms not listed there get `A count of <name> events`. Add an entry when you add a new alarm in UniFi Protect if you want a better description.
+The `# HELP` text for each metric comes from the `metricHelp` map in `main.go`, keyed by alarm name without the `unifi_protect_` prefix. Alarms not listed there get `A count of <name> events`. Add an entry when you add a new alarm in UniFi Protect if you want a better description.
 
 ## Deployment
 
@@ -122,7 +122,7 @@ In Protect's Alarm Manager, create an alarm with a webhook action:
 - **Method:** POST
 - **Header:** `Authorization: Bearer <contents of auth.key>`
 
-The alarm's name becomes the metric name, as described under [`POST /metrics`](#post-metrics-receive-an-event).
+The alarm's name, prefixed with `unifi_protect_`, becomes the metric name, as described under [`POST /metrics`](#post-metrics-receive-an-event).
 
 ### Scraping
 

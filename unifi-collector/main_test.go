@@ -219,7 +219,7 @@ func TestPostData(t *testing.T) {
 		}
 
 		want := map[string]map[string]int64{
-			"person_detected":  {"front door": 1, "back door": 2},
+			"person_detected": {"front door": 1, "back door": 2},
 			"animal_detected": {"unknown_cam": 1},
 		}
 		if fmt.Sprint(metricsCache) != fmt.Sprint(want) {
@@ -288,13 +288,13 @@ func TestGetMetrics(t *testing.T) {
 			t.Errorf("Content-Type = %q", ct)
 		}
 		// HELP text is read from metricHelp so rewording a description doesn't break this test
-		want := fmt.Sprintf(`# HELP animal_detected %s
-# TYPE animal_detected gauge
-animal_detected{camera="camera_3"} 4
-# HELP person_detected %s
-# TYPE person_detected gauge
-person_detected{camera="back door"} 3
-person_detected{camera="front door"} 1
+		want := fmt.Sprintf(`# HELP unifi_protect_animal_detected %s
+# TYPE unifi_protect_animal_detected gauge
+unifi_protect_animal_detected{camera="camera_3"} 4
+# HELP unifi_protect_person_detected %s
+# TYPE unifi_protect_person_detected gauge
+unifi_protect_person_detected{camera="back door"} 3
+unifi_protect_person_detected{camera="front door"} 1
 `, metricHelp["animal_detected"], metricHelp["person_detected"])
 		if got := rec.Body.String(); got != want {
 			t.Errorf("body:\n%s\nwant:\n%s", got, want)
@@ -320,7 +320,7 @@ person_detected{camera="front door"} 1
 		resetState(t)
 		recordEvent(event, "front door")
 
-		want := "# HELP " + event + " A count of " + event + " events\n"
+		want := "# HELP unifi_protect_" + event + " A count of " + event + " events\n"
 		if got := scrape().Body.String(); !strings.HasPrefix(got, want) {
 			t.Errorf("body:\n%s\nwant prefix:\n%s", got, want)
 		}
@@ -334,9 +334,9 @@ person_detected{camera="front door"} 1
 
 		body := scrape().Body.String()
 		for _, want := range []string{
-			`person_detected{camera="say \"hi\""} 1`,
-			`person_detected{camera="C:\\cam"} 1`,
-			`person_detected{camera="line1\nline2"} 1`,
+			`unifi_protect_person_detected{camera="say \"hi\""} 1`,
+			`unifi_protect_person_detected{camera="C:\\cam"} 1`,
+			`unifi_protect_person_detected{camera="line1\nline2"} 1`,
 		} {
 			if !strings.Contains(body, want+"\n") {
 				t.Errorf("body missing %s\nbody:\n%s", want, body)
@@ -378,7 +378,7 @@ func TestConcurrentPostAndScrape(t *testing.T) {
 		body := scrape().Body.String()
 		var n int64
 		for _, line := range strings.Split(body, "\n") {
-			if strings.HasPrefix(line, "person_detected{") {
+			if strings.HasPrefix(line, "unifi_protect_person_detected{") {
 				var v int64
 				fmt.Sscanf(line[strings.LastIndex(line, " ")+1:], "%d", &v)
 				n += v

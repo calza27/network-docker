@@ -21,6 +21,7 @@ import (
 const (
 	maxBodyBytes    = 1 << 20 // 1 MiB
 	cameraNamesPath = "/var/lib/cameras.yml"
+	metricPrefix    = "unifi_protect_" // namespaces every exported metric name
 )
 
 // local cache of events
@@ -203,13 +204,14 @@ func getMetrics(w http.ResponseWriter, r *http.Request) {
 		if !ok {
 			help = "A count of " + event + " events"
 		}
-		fmt.Fprintf(&b, "# HELP %s %s\n", event, help)
+		name := metricPrefix + event
+		fmt.Fprintf(&b, "# HELP %s %s\n", name, help)
 		// gauge rather than counter: values are per-scrape deltas, as the cache is reset on every GET
-		fmt.Fprintf(&b, "# TYPE %s gauge\n", event)
+		fmt.Fprintf(&b, "# TYPE %s gauge\n", name)
 
 		cameras := snapshot[event]
 		for _, camera := range slices.Sorted(maps.Keys(cameras)) {
-			fmt.Fprintf(&b, "%s{camera=\"%s\"} %d\n", event, labelEscaper.Replace(camera), cameras[camera])
+			fmt.Fprintf(&b, "%s{camera=\"%s\"} %d\n", name, labelEscaper.Replace(camera), cameras[camera])
 		}
 	}
 
