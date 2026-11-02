@@ -18,6 +18,7 @@ services:
       FTLCONF_webserver_api_password: ''
       FTLCONF_dns_listeningMode: 'ALL'
       FTLCONF_misc_etc_dnsmasq_d: 'true'
+      FTLCONF_webserver_domain: 'pihole.emporer.net'
     volumes:
       - '/data/docker/mounts/pihole/config:/etc/pihole'
       - '/data/docker/mounts/pihole/dnsmasq:/etc/dnsmasq.d'
