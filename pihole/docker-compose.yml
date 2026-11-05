@@ -37,8 +37,6 @@ services:
     environment:
       # Use internal Docker networking to reach Pi-hole via its service name
       - PIHOLE_HOSTNAME=pihole
-      # Required flag enabling the exporter to process Pi-hole v6 API structure
-      - PIHOLE_VERSION=v6
       - PIHOLE_PASSWORD=${EXPORTER_APP_PASSWORD}
     restart: unless-stopped
     depends_on:
