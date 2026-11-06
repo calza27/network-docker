@@ -1,8 +1,4 @@
 # More info at https://github.com/pi-hole/docker-pi-hole/ and https://docs.pi-hole.net/
-secrets:
-  pihole_password:
-    file: /data/docker/secrets/pihole/pihole_password.key
-
 services:
   pihole:
     container_name: pihole
@@ -41,14 +37,12 @@ services:
     environment:
       # Use internal Docker networking to reach Pi-hole via its service name
       - PIHOLE_HOSTNAME=pihole
-      - PIHOLE_PASSWORD_FILE=/run/secrets/pihole_password
+      - PIHOLE_PASSWORD=${EXPORTER_APP_PASSWORD}
     restart: unless-stopped
     depends_on:
       - pihole
     networks:
       - pihole-net
-    secrets:
-      - pihole_password
 
 networks:
   pihole-net:
