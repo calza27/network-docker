@@ -1,4 +1,8 @@
 # More info at https://github.com/pi-hole/docker-pi-hole/ and https://docs.pi-hole.net/
+secrets:
+  pihole_password:
+    file: /data/docker/secrets/pihole/pihole_password.key
+
 services:
   pihole:
     container_name: pihole
@@ -15,7 +19,6 @@ services:
       - "30453:443/tcp"
     environment:
       TZ: 'Australia/Melbourne'
-      FTLCONF_webserver_api_password: ''
       FTLCONF_dns_listeningMode: 'ALL'
       FTLCONF_misc_etc_dnsmasq_d: 'true'
       FTLCONF_webserver_domain: 'pihole.emporer.net'
@@ -37,7 +40,7 @@ services:
     environment:
       # Use internal Docker networking to reach Pi-hole via its service name
       - PIHOLE_HOSTNAME=pihole
-      - PIHOLE_PASSWORD=${EXPORTER_APP_PASSWORD}
+      - PIHOLE_PASSWORD_FILE=/run/secrets/pihole_password
     restart: unless-stopped
     depends_on:
       - pihole
