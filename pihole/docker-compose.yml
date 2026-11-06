@@ -47,6 +47,8 @@ services:
       - pihole
     networks:
       - pihole-net
+    secrets:
+      - pihole_password
 
 networks:
   pihole-net:
