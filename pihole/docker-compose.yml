@@ -35,8 +35,8 @@ services:
     ports:
       - "9617:9617"
     environment:
-      # Use internal Docker networking to reach Pi-hole via its service name
-      - PIHOLE_HOSTNAME=pihole
+      - PIHOLE_HOSTNAME=192.168.10.4
+      - PIHOLE_PORT=30053
       - PIHOLE_PASSWORD=${EXPORTER_APP_PASSWORD}
     restart: unless-stopped
     depends_on:
