@@ -37,7 +37,7 @@ services:
     environment:
       # Use internal Docker networking to reach Pi-hole via its service name
       - PIHOLE_HOSTNAME=pihole
-      - PIHOLE_API_TOKEN=${EXPORTER_APP_PASSWORD}
+      - PIHOLE_PASSWORD=${EXPORTER_APP_PASSWORD}
     restart: unless-stopped
     depends_on:
       - pihole
